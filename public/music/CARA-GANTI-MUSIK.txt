@@ -1,0 +1,5 @@
+Folder ini menampung file musik latar (MP3) untuk undangan pernikahan.
+
+Cara mengganti musik:
+1. Masukkan atau ganti file .mp3 di dalam folder ini (`public/music/`).
+2. Website akan otomatis mendeteksi dan memutar file .mp3 yang ada di folder ini secara autoplay saat link undangan dibuka.

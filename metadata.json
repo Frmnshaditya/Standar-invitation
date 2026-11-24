@@ -1,0 +1,8 @@
+{
+  "name": "Dewi & Deni – The Wedding Of",
+  "description": "Undangan Pernikahan Digital Dewi Marina, S. Pd. & Mohammad Deni Setiawan, S. Pd. — Minggu, 08 November 2026.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
