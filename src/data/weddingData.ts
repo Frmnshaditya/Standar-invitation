@@ -156,7 +156,6 @@ export const LOVE_STORY_CHAPTERS: LoveStoryChapter[] = [
   {
     id: 'penantian-46-tahun',
     title: 'Empat Puluh Enam Tahun Penantian',
-    date: 'Bulaksumur & Senja Yogyakarta',
     image: '/assets/aistudio/2ae8f17f-99f6-446d-9f5e-5b20297725d4_3c5c4018.jpg',
     paragraphs: [
       'Empat puluh enam tahun bukanlah waktu yang singkat. Musim berganti, rambut memutih, dan garis usia mulai terukir di wajah, namun rasa itu tetap tinggal di tempat yang sama—utuh dan tak lekang oleh zaman. Di antara kenangan sudut-sudut Bulaksumur dan senja Yogyakarta yang syahdu, cinta ini membuktikan bahwa kesetiaan sejati tidak mengenal kata kedaluwarsa.',

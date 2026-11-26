@@ -40,7 +40,7 @@ export default function AmplopSection() {
 
         <Reveal animation="zoomIn" slow className="mt-8 w-full">
           <div id="amplop" className="flex w-full flex-col gap-6">
-            {BANK_ACCOUNTS.map((account, index) => {
+            {BANK_ACCOUNTS.map((account) => {
               const isCopied = copiedId === account.id;
               const dotPatternId = `card-dots-${account.id}`;
               const chipGradId = `chip-grad-${account.id}`;
@@ -167,11 +167,7 @@ export default function AmplopSection() {
                   {/* Bottom Row: Account Holder + Number on Left, Salin Button on Right */}
                   <div className="relative z-10 flex items-end justify-between gap-3 pt-2">
                     <div className="min-w-0">
-                      <p
-                        className={`font-albert truncate text-[15px] font-semibold sm:text-base ${
-                          index === 1 ? 'text-[#9A5D0A]' : 'text-[#222222]'
-                        }`}
-                      >
+                      <p className="font-albert truncate text-[15px] font-semibold text-[#9A5D0A] sm:text-base">
                         {account.accountHolder}
                       </p>
                       <p className="font-albert mt-0.5 text-[14px] font-normal tracking-wide text-[#555555] tabular-nums sm:text-[15px]">
