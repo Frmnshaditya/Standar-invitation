@@ -25,27 +25,40 @@ export default function CoverGate({ guestName, onOpen }: CoverGateProps) {
       aria-label="Sampul Undangan"
       className="min-h-dvh-screen relative flex w-full items-center justify-center overflow-hidden bg-[#202020]"
     >
-      {/* Background Ken Burns Slideshow (2500ms crossfade + zoom-in) */}
+      {/* Background Ken Burns Slideshow: Foto 1 & 2 disandingkan, bergantian dengan Foto 3 & 4 */}
       <div className="absolute inset-0 overflow-hidden">
-        {WEDDING_IMAGES.coverSlides.map((src, idx) => {
+        {WEDDING_IMAGES.coverSlides.map((pair, idx) => {
           const isActive = idx === slideIndex;
           return (
             <div
-              key={src}
+              key={`${pair.left}-${pair.right}`}
               style={{ transitionDuration: '2500ms' }}
-              className={`absolute inset-0 transition-opacity ease-in-out ${
+              className={`absolute inset-0 grid grid-cols-2 transition-opacity ease-in-out ${
                 isActive ? 'z-10 opacity-100' : 'z-0 opacity-0'
               }`}
             >
-              <img
-                key={isActive ? `active-${slideIndex}` : `idle-${idx}`}
-                src={src}
-                alt="Potret Dewi & Deni"
-                referrerPolicy="no-referrer"
-                className={`h-full w-full object-cover object-center ${
-                  isActive ? 'elementor-ken-burns-in' : ''
-                }`}
-              />
+              <div className="relative h-full w-full overflow-hidden">
+                <img
+                  key={isActive ? `left-active-${slideIndex}` : `left-idle-${idx}`}
+                  src={pair.left}
+                  alt={pair.leftAlt}
+                  referrerPolicy="no-referrer"
+                  className={`h-full w-full object-cover object-top ${
+                    isActive ? 'elementor-ken-burns-in' : ''
+                  }`}
+                />
+              </div>
+              <div className="relative h-full w-full overflow-hidden">
+                <img
+                  key={isActive ? `right-active-${slideIndex}` : `right-idle-${idx}`}
+                  src={pair.right}
+                  alt={pair.rightAlt}
+                  referrerPolicy="no-referrer"
+                  className={`h-full w-full object-cover object-top ${
+                    isActive ? 'elementor-ken-burns-in' : ''
+                  }`}
+                />
+              </div>
             </div>
           );
         })}

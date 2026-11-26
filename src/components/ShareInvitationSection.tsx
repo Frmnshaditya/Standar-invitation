@@ -15,7 +15,7 @@ export default function ShareInvitationSection() {
   const trimmedGuest = guestNameInput.trim();
 
   const generatedUrl = useMemo(() => {
-    const base = `${origin}/dewi-deni`;
+    const base = `${origin}/metty-piter`;
     if (!trimmedGuest) return base;
     const formattedGuest = trimmedGuest.replace(/\s+/g, '-');
     return `${base}?to=${encodeURIComponent(formattedGuest)}`;

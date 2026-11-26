@@ -3,8 +3,8 @@ import { MessageSquare, Send } from 'lucide-react';
 import { INITIAL_WISHES, RsvpWish } from '../data/weddingData';
 import Reveal from './Reveal';
 
-const STORAGE_KEY = 'dewi_deni_rsvp_wishes_v2';
-const LEGACY_STORAGE_KEY = 'dewi_deni_rsvp_wishes_v1';
+const STORAGE_KEY = 'metty_piter_rsvp_wishes_v1';
+const LEGACY_STORAGE_KEY = 'dewi_deni_rsvp_wishes_v2';
 const ITEMS_PER_PAGE = 10;
 
 const ATTENDANCE_LABELS: Record<RsvpWish['attendance'], string> = {

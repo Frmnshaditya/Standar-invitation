@@ -20,10 +20,10 @@ export default function QuoteSection() {
             {!imgError ? (
               <img
                 src={WEDDING_IMAGES.quotePortrait}
-                alt="Dewi & Deni Prewedding"
+                alt={`Potret ${WEDDING_INFO.coupleShort}`}
                 referrerPolicy="no-referrer"
                 onError={() => setImgError(true)}
-                className="aspect-[2/3] w-full object-cover object-center"
+                className="aspect-[2/3] w-full object-cover object-top"
               />
             ) : (
               <div className="flex aspect-[2/3] w-full items-center justify-center bg-gradient-to-b from-[#D9D6D0] to-[#C8C3BA] p-6 text-center text-[#4D4D4D]">

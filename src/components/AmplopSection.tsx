@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { Check, Copy, Gift } from 'lucide-react';
-import { BANK_ACCOUNTS, PHYSICAL_GIFT_ADDRESS } from '../data/weddingData';
+import { Check, Copy } from 'lucide-react';
+import { BANK_ACCOUNTS, WEDDING_INFO } from '../data/weddingData';
 import Reveal from './Reveal';
 
 export default function AmplopSection() {
-  const [isExpanded, setIsExpanded] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
   const handleCopy = async (id: string, value: string) => {
@@ -26,7 +25,7 @@ export default function AmplopSection() {
 
   return (
     <section id="amplop-digital" className="w-full bg-[#FFFFFF] px-4 py-14 sm:px-6 sm:py-20">
-      <div className="mx-auto flex w-full max-w-[500px] flex-col items-center text-center">
+      <div className="mx-auto flex w-full max-w-[440px] flex-col items-center text-center">
         <Reveal animation="fadeInUp">
           <h2 className="font-italiana text-[34px] font-medium text-[#4E4E4E] sm:text-[42px]">
             Amplop Digital
@@ -35,83 +34,147 @@ export default function AmplopSection() {
 
         <Reveal animation="zoomIn">
           <p className="font-lato mt-3 max-w-md text-[14px] leading-relaxed text-[#4D4D4D] sm:text-[15px]">
-            Doa Restu Anda merupakan karunia yang sangat berarti bagi kami. Namun jika
-            memberi adalah ungkapan tanda kasih Anda, Anda dapat memberi kado secara
-            cashless.
+            {WEDDING_INFO.amplopIntro}
           </p>
         </Reveal>
 
-        <button
-          id="btnAmplop"
-          type="button"
-          onClick={() => setIsExpanded((prev) => !prev)}
-          aria-expanded={isExpanded}
-          className="font-crimson mt-6 inline-flex min-h-[42px] cursor-pointer items-center justify-center rounded-[18px] bg-[#717171] px-7 py-2 text-[17px] font-normal text-white transition-colors duration-200 hover:bg-[#494949] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#494949]"
-        >
-          {isExpanded ? 'Tutup Amplop Digital' : 'Klik Disini'}
-        </button>
-
-        {isExpanded && (
-          <div
-            id="amplop"
-            className="el-animated-slow el-zoomIn mt-8 flex w-full flex-col gap-5"
-          >
-            {BANK_ACCOUNTS.map((account) => {
+        <Reveal animation="zoomIn" slow className="mt-8 w-full">
+          <div id="amplop" className="flex w-full flex-col gap-6">
+            {BANK_ACCOUNTS.map((account, index) => {
               const isCopied = copiedId === account.id;
+              const dotPatternId = `card-dots-${account.id}`;
+              const chipGradId = `chip-grad-${account.id}`;
               return (
                 <div
                   key={account.id}
-                  className="relative overflow-hidden rounded-2xl border border-[#E5E0D8] bg-gradient-to-br from-[#FBF9F6] via-[#F2EDE4] to-[#E6DFD2] p-6 text-left shadow-sm"
+                  className="relative flex min-h-[210px] w-full flex-col justify-between overflow-hidden rounded-[18px] border border-black/[0.06] bg-white px-6 py-5 text-left shadow-[0_14px_34px_rgba(0,0,0,0.12)] sm:min-h-[224px] sm:px-7 sm:py-6"
                 >
-                  {/* Subtle geometric card sheen */}
-                  <div
-                    className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full bg-white/40 blur-2xl"
+                  {/* Exclusive geometric pearl-silver ATM card texture */}
+                  <svg
+                    className="pointer-events-none absolute inset-0 h-full w-full"
+                    viewBox="0 0 400 240"
+                    preserveAspectRatio="none"
                     aria-hidden="true"
-                  />
+                  >
+                    <defs>
+                      <linearGradient
+                        id={`bg-base-${account.id}`}
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%"
+                      >
+                        <stop offset="0%" stopColor="#FFFFFF" />
+                        <stop offset="52%" stopColor="#F5F7F6" />
+                        <stop offset="100%" stopColor="#E4E9E7" />
+                      </linearGradient>
+                      <pattern
+                        id={dotPatternId}
+                        x="0"
+                        y="0"
+                        width="10"
+                        height="10"
+                        patternUnits="userSpaceOnUse"
+                      >
+                        <circle cx="2" cy="2" r="1.4" fill="#FFFFFF" fillOpacity="0.65" />
+                      </pattern>
+                    </defs>
 
-                  <div className="relative z-10 flex items-center justify-between">
-                    {/* EMV Chip SVG */}
-                    <svg
-                      width="38"
-                      height="28"
-                      viewBox="0 0 38 28"
-                      fill="none"
-                      aria-hidden="true"
-                      className="rounded"
-                    >
-                      <rect
-                        x="0.5"
-                        y="0.5"
-                        width="37"
-                        height="27"
-                        rx="4.5"
-                        fill="#D8C8A0"
-                        stroke="#B8A373"
-                      />
-                      <path
-                        d="M13 1V27M25 1V27M1 10H13M25 10H37M1 18H13M25 18H37"
-                        stroke="#9F8B5D"
-                        strokeWidth="1"
-                      />
-                    </svg>
+                    <rect width="400" height="240" fill={`url(#bg-base-${account.id})`} />
 
-                    {/* SeaBank Wordmark */}
-                    <div className="flex items-center gap-1.5">
-                      <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-[#EE4D2D] text-xs font-bold text-white">
-                        S
-                      </span>
-                      <span className="font-albert text-base font-semibold tracking-tight text-[#252525]">
-                        {account.bankName}
-                      </span>
-                    </div>
+                    {/* Translucent layered circles & diagonal luxury ribbons */}
+                    <circle cx="115" cy="115" r="88" fill="#E8ECEA" fillOpacity="0.55" />
+                    <circle cx="210" cy="45" r="68" fill="#FFFFFF" fillOpacity="0.7" />
+                    <path
+                      d="M170 240 L340 0 L400 0 L400 120 L265 240 Z"
+                      fill="#DCE2DF"
+                      fillOpacity="0.5"
+                    />
+                    <path
+                      d="M235 240 L400 72 L400 240 Z"
+                      fill="#CED6D2"
+                      fillOpacity="0.55"
+                    />
+                    <path
+                      d="M115 240 L295 0 L355 0 L185 240 Z"
+                      fill="#FFFFFF"
+                      fillOpacity="0.45"
+                    />
+
+                    {/* Subtle halftone dot cluster on bottom-right corner */}
+                    <path
+                      d="M205 240 Q290 190 400 135 L400 240 Z"
+                      fill={`url(#${dotPatternId})`}
+                    />
+                  </svg>
+
+                  {/* Top Row: Bank Logo on Top Right */}
+                  <div className="relative z-10 flex items-start justify-end">
+                    <img
+                      src="/assets/bca-logo.png"
+                      alt={`Logo ${account.bankName}`}
+                      referrerPolicy="no-referrer"
+                      className="h-7 w-auto object-contain sm:h-8"
+                    />
                   </div>
 
-                  <div className="relative z-10 mt-6 flex flex-wrap items-end justify-between gap-4">
-                    <div>
-                      <p className="font-albert text-xs font-medium tracking-wider uppercase text-[#584A2F]">
+                  {/* Middle Row: Realistic Gold Metallic EMV Chip */}
+                  <div className="relative z-10 my-3 flex items-center">
+                    <svg
+                      width="44"
+                      height="32"
+                      viewBox="0 0 44 32"
+                      fill="none"
+                      aria-hidden="true"
+                      className="rounded-[5px] shadow-[0_1px_2px_rgba(0,0,0,0.18)]"
+                    >
+                      <defs>
+                        <linearGradient id={chipGradId} x1="0" y1="0" x2="44" y2="32">
+                          <stop offset="0%" stopColor="#EAD290" />
+                          <stop offset="50%" stopColor="#D7B564" />
+                          <stop offset="100%" stopColor="#BA9440" />
+                        </linearGradient>
+                      </defs>
+                      <rect
+                        x="0.6"
+                        y="0.6"
+                        width="42.8"
+                        height="30.8"
+                        rx="4.4"
+                        fill={`url(#${chipGradId})`}
+                        stroke="#9F7C2E"
+                        strokeWidth="1"
+                      />
+                      <path
+                        d="M15 1V31M29 1V31M1 11H15M29 11H43M1 21H15M29 21H43M15 16H29"
+                        stroke="#7E6120"
+                        strokeWidth="1"
+                        strokeOpacity="0.7"
+                      />
+                      <rect
+                        x="15"
+                        y="11"
+                        width="14"
+                        height="10"
+                        rx="2"
+                        stroke="#7E6120"
+                        strokeWidth="1"
+                        strokeOpacity="0.7"
+                      />
+                    </svg>
+                  </div>
+
+                  {/* Bottom Row: Account Holder + Number on Left, Salin Button on Right */}
+                  <div className="relative z-10 flex items-end justify-between gap-3 pt-2">
+                    <div className="min-w-0">
+                      <p
+                        className={`font-albert truncate text-[15px] font-semibold sm:text-base ${
+                          index === 1 ? 'text-[#9A5D0A]' : 'text-[#222222]'
+                        }`}
+                      >
                         {account.accountHolder}
                       </p>
-                      <p className="font-crimson mt-1 text-xl font-semibold tracking-wider text-[#252525] tabular-nums sm:text-2xl">
+                      <p className="font-albert mt-0.5 text-[14px] font-normal tracking-wide text-[#555555] tabular-nums sm:text-[15px]">
                         {account.accountNumber}
                       </p>
                     </div>
@@ -119,7 +182,7 @@ export default function AmplopSection() {
                     <button
                       type="button"
                       onClick={() => handleCopy(account.id, account.accountNumber)}
-                      className="font-crimson inline-flex min-h-[38px] cursor-pointer items-center gap-1.5 rounded-[8px] bg-[#7E7E7E] px-4 py-1.5 text-sm font-medium text-white transition-colors duration-200 hover:bg-[#494949] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#494949]"
+                      className="font-albert inline-flex min-h-[34px] shrink-0 cursor-pointer items-center gap-1.5 rounded-[6px] bg-[#767676] px-3.5 py-1.5 text-xs font-medium text-white shadow-sm transition-colors duration-200 hover:bg-[#4E4E4E] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#4E4E4E]"
                     >
                       {isCopied ? (
                         <>
@@ -137,38 +200,8 @@ export default function AmplopSection() {
                 </div>
               );
             })}
-
-            {/* Physical Gift Address */}
-            <div className="el-animated el-fadeInUp flex flex-col items-center rounded-2xl border border-[#E6E2DC] bg-[#FBFBFB] px-6 py-6 text-center">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#584A2F] text-white">
-                <Gift className="h-5 w-5" aria-hidden="true" />
-              </div>
-              <p className="font-lato mt-3 text-sm font-medium text-[#4D4D4D]">
-                Anda Juga Bisa Mengirim Kado Fisik Ke Alamat Berikut:
-              </p>
-              <p className="font-crimson mt-1.5 text-base font-semibold text-[#252525]">
-                {PHYSICAL_GIFT_ADDRESS}
-              </p>
-              <button
-                type="button"
-                onClick={() => handleCopy('physical-address', PHYSICAL_GIFT_ADDRESS)}
-                className="font-crimson mt-4 inline-flex min-h-[36px] cursor-pointer items-center gap-1.5 rounded-[8px] bg-[#7E7E7E] px-4 py-1.5 text-xs font-medium text-white transition-colors duration-200 hover:bg-[#494949] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#494949]"
-              >
-                {copiedId === 'physical-address' ? (
-                  <>
-                    <Check className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-                    <span>Alamat Tersalin</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-                    <span>Salin Alamat</span>
-                  </>
-                )}
-              </button>
-            </div>
           </div>
-        )}
+        </Reveal>
       </div>
     </section>
   );

@@ -1,5 +1,7 @@
-Folder ini menampung file musik latar (MP3) untuk undangan pernikahan.
+PANDUAN MENGGANTI MUSIK UNDANGAN:
 
-Cara mengganti musik:
-1. Masukkan atau ganti file .mp3 di dalam folder ini (`public/music/`).
-2. Website akan otomatis mendeteksi dan memutar file .mp3 yang ada di folder ini secara autoplay saat link undangan dibuka.
+1. Siapkan file musik Anda (misalnya: "I Finally Found Someone - Facundo Pisoli (Instrumental).mp3").
+2. Simpan file .mp3 tersebut ke dalam folder ini (public/music/).
+   Hanya perlu ada 1 file musik di dalam folder ini (mendukung .mp3, .m4a, .ogg, atau .wav).
+3. Apabila file MP3 masih memiliki intro panjang dan Anda ingin musik langsung mulai di bagian reff saat undangan dibuka, atur nilai `startAtSeconds` pada `WEDDING_MUSIC` di file `src/data/weddingData.ts` (atau potong MP3 terlebih dahulu mulai dari bagian reff).
+4. Setelah itu, jalankan ulang server / build website, dan musik akan otomatis diputar.

@@ -18,31 +18,44 @@ export default function HeroSection() {
       id="cover"
       className="min-h-dvh-screen relative flex w-full items-end justify-center overflow-hidden bg-[#1F1F1F]"
     >
-      {/* Background Ken Burns Slideshow (3000ms crossfade + zoom-in) */}
+      {/* Background Ken Burns Slideshow: Foto 1 & 2 disandingkan, bergantian dengan Foto 3 & 4 */}
       <div id="_foto_penutup_slideshow" className="absolute inset-0 overflow-hidden">
-        {WEDDING_IMAGES.heroSlides.map((src, idx) => {
+        {WEDDING_IMAGES.heroSlides.map((pair, idx) => {
           const isActive = idx === slideIndex;
           return (
             <div
-              key={src}
+              key={`${pair.left}-${pair.right}`}
               style={{ transitionDuration: '3000ms' }}
-              className={`absolute inset-0 transition-opacity ease-in-out ${
+              className={`absolute inset-0 grid grid-cols-2 transition-opacity ease-in-out ${
                 isActive ? 'z-10 opacity-100' : 'z-0 opacity-0'
               }`}
             >
-              <img
-                key={isActive ? `hero-active-${slideIndex}` : `hero-idle-${idx}`}
-                src={src}
-                alt="Momen Pernikahan Dewi & Deni"
-                referrerPolicy="no-referrer"
-                className={`h-full w-full object-cover object-center ${
-                  isActive ? 'elementor-ken-burns-in' : ''
-                }`}
-              />
+              <div className="relative h-full w-full overflow-hidden">
+                <img
+                  key={isActive ? `hero-left-active-${slideIndex}` : `hero-left-idle-${idx}`}
+                  src={pair.left}
+                  alt={pair.leftAlt}
+                  referrerPolicy="no-referrer"
+                  className={`h-full w-full object-cover object-top ${
+                    isActive ? 'elementor-ken-burns-in' : ''
+                  }`}
+                />
+              </div>
+              <div className="relative h-full w-full overflow-hidden">
+                <img
+                  key={isActive ? `hero-right-active-${slideIndex}` : `hero-right-idle-${idx}`}
+                  src={pair.right}
+                  alt={pair.rightAlt}
+                  referrerPolicy="no-referrer"
+                  className={`h-full w-full object-cover object-top ${
+                    isActive ? 'elementor-ken-burns-in' : ''
+                  }`}
+                />
+              </div>
             </div>
           );
         })}
-        {/* Dark scrim #1F1F1F opacity 0.61 + bottom gradient for contrast */}
+        {/* Dark scrim #1F1F1F opacity 0.55 + bottom gradient for contrast */}
         <div className="absolute inset-0 z-20 bg-[#1F1F1F]/55" />
         <div className="absolute inset-0 z-20 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
       </div>
