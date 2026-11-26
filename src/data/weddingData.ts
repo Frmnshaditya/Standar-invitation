@@ -33,7 +33,7 @@ export interface RsvpWish {
 export const WEDDING_MUSIC = {
   volume: 0.65,
   autoPlay: true,
-  startAtSeconds: 0,
+  startAtSeconds: 68,
 };
 
 export interface PairedSlide {

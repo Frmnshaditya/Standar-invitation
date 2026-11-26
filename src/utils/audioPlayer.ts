@@ -102,6 +102,22 @@ class WeddingAudioEngine {
     this.listeners.forEach((fn) => fn(this.isPlaying));
   }
 
+  private applyStartOffset(audio: HTMLAudioElement) {
+    if (
+      !this.appliedStartOffset &&
+      WEDDING_MUSIC.startAtSeconds > 0 &&
+      Number.isFinite(audio.duration) &&
+      audio.duration > WEDDING_MUSIC.startAtSeconds + 10
+    ) {
+      try {
+        audio.currentTime = WEDDING_MUSIC.startAtSeconds;
+        this.appliedStartOffset = true;
+      } catch {
+        // Ignore if media is not seekable yet; will retry on canplay/playing
+      }
+    }
+  }
+
   private ensureAudioElement(): HTMLAudioElement | null {
     if (typeof window === 'undefined' || !this.musicSrc || this.useFallbackSynth) {
       return null;
@@ -113,17 +129,9 @@ class WeddingAudioEngine {
       audio.preload = 'auto';
       audio.volume = WEDDING_MUSIC.volume;
 
-      audio.addEventListener('loadedmetadata', () => {
-        if (
-          !this.appliedStartOffset &&
-          WEDDING_MUSIC.startAtSeconds > 0 &&
-          Number.isFinite(audio.duration) &&
-          audio.duration > WEDDING_MUSIC.startAtSeconds + 10
-        ) {
-          audio.currentTime = WEDDING_MUSIC.startAtSeconds;
-          this.appliedStartOffset = true;
-        }
-      });
+      const onSeekReady = () => this.applyStartOffset(audio);
+      audio.addEventListener('loadedmetadata', onSeekReady);
+      audio.addEventListener('canplay', onSeekReady);
 
       audio.addEventListener('error', () => {
         this.useFallbackSynth = true;
@@ -223,16 +231,9 @@ class WeddingAudioEngine {
     const audio = this.ensureAudioElement();
     if (audio && !this.useFallbackSynth) {
       try {
-        if (
-          !this.appliedStartOffset &&
-          WEDDING_MUSIC.startAtSeconds > 0 &&
-          Number.isFinite(audio.duration) &&
-          audio.duration > WEDDING_MUSIC.startAtSeconds + 10
-        ) {
-          audio.currentTime = WEDDING_MUSIC.startAtSeconds;
-          this.appliedStartOffset = true;
-        }
+        this.applyStartOffset(audio);
         await audio.play();
+        this.applyStartOffset(audio);
         this.isPlaying = true;
         this.notify();
         return true;
