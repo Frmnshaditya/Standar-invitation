@@ -19,8 +19,22 @@ export default function RsvpSection() {
       localStorage.removeItem(LEGACY_STORAGE_KEY);
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
-        const parsed = JSON.parse(saved) as RsvpWish[];
-        if (Array.isArray(parsed)) return parsed;
+        const parsed: unknown = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          const valid = parsed.filter(
+            (item): item is RsvpWish =>
+              Boolean(item) &&
+              typeof item === 'object' &&
+              typeof (item as RsvpWish).id === 'string' &&
+              typeof (item as RsvpWish).name === 'string' &&
+              typeof (item as RsvpWish).message === 'string' &&
+              typeof (item as RsvpWish).createdAt === 'string' &&
+              ((item as RsvpWish).attendance === 'present' ||
+                (item as RsvpWish).attendance === 'notpresent' ||
+                (item as RsvpWish).attendance === 'notsure')
+          );
+          if (valid.length > 0) return valid;
+        }
       }
     } catch {
       // Ignore storage errors

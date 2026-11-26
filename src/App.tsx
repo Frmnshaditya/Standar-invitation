@@ -50,11 +50,12 @@ export default function App() {
       return unsubscribe;
     }
 
+    let active = true;
     let unlocked = false;
     const tryAutoPlay = async () => {
-      if (unlocked || weddingAudio.getPlaying()) return;
+      if (!active || unlocked || weddingAudio.getPlaying()) return;
       const ok = await weddingAudio.play();
-      if (ok) {
+      if (ok && active) {
         unlocked = true;
         cleanupGestureListeners();
       }
@@ -66,8 +67,6 @@ export default function App() {
 
     const cleanupGestureListeners = () => {
       window.removeEventListener('pointerdown', onFirstGesture);
-      window.removeEventListener('touchstart', onFirstGesture);
-      window.removeEventListener('click', onFirstGesture);
       window.removeEventListener('keydown', onFirstGesture);
     };
 
@@ -76,11 +75,10 @@ export default function App() {
 
     // If browser autoplay policy blocks sound before interaction, unlock immediately on first tap/click/key
     window.addEventListener('pointerdown', onFirstGesture, { passive: true });
-    window.addEventListener('touchstart', onFirstGesture, { passive: true });
-    window.addEventListener('click', onFirstGesture, { passive: true });
     window.addEventListener('keydown', onFirstGesture, { passive: true });
 
     return () => {
+      active = false;
       unsubscribe();
       cleanupGestureListeners();
     };
@@ -88,6 +86,10 @@ export default function App() {
 
   // Strictly lock scrolling on html & body until "Open Invitation" is clicked
   useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+
     const html = document.documentElement;
     const body = document.body;
 
@@ -99,7 +101,9 @@ export default function App() {
       window.scrollTo(0, 0);
 
       const preventScroll = (e: Event) => {
-        e.preventDefault();
+        if (e.cancelable) {
+          e.preventDefault();
+        }
       };
       window.addEventListener('wheel', preventScroll, { passive: false });
       window.addEventListener('touchmove', preventScroll, { passive: false });

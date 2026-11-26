@@ -51,7 +51,6 @@
 
 .elementor-ken-burns-in {
   animation: elementorKenBurnsIn 20s linear forwards;
-  will-change: transform;
 }
 
 @keyframes slowSpin {

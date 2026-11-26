@@ -22,6 +22,7 @@ class WeddingAudioEngine {
   private masterGain: GainNode | null = null;
   private stepIndex = 0;
   private appliedStartOffset = false;
+  private playPromise: Promise<boolean> | null = null;
   private listeners = new Set<(playing: boolean) => void>();
 
   // Chorus-first romantic felt-piano arrangement inspired by "I Finally Found Someone" (in C Major)
@@ -227,30 +228,40 @@ class WeddingAudioEngine {
 
   public async play(): Promise<boolean> {
     if (this.isPlaying) return true;
+    if (this.playPromise) return this.playPromise;
 
-    const audio = this.ensureAudioElement();
-    if (audio && !this.useFallbackSynth) {
-      try {
-        this.applyStartOffset(audio);
-        await audio.play();
-        this.applyStartOffset(audio);
-        this.isPlaying = true;
-        this.notify();
-        return true;
-      } catch (err) {
-        const errName = err instanceof DOMException ? err.name : '';
-        if (errName === 'NotAllowedError') {
-          return false;
+    this.playPromise = (async () => {
+      const audio = this.ensureAudioElement();
+      if (audio && !this.useFallbackSynth) {
+        try {
+          this.applyStartOffset(audio);
+          await audio.play();
+          this.applyStartOffset(audio);
+          this.isPlaying = true;
+          this.notify();
+          return true;
+        } catch (err) {
+          const errName = err instanceof DOMException ? err.name : '';
+          if (errName === 'NotAllowedError' || errName === 'AbortError') {
+            return false;
+          }
+          this.useFallbackSynth = true;
         }
-        this.useFallbackSynth = true;
       }
-    }
 
-    return this.startSynth();
+      return this.startSynth();
+    })();
+
+    try {
+      return await this.playPromise;
+    } finally {
+      this.playPromise = null;
+    }
   }
 
   public pause(): void {
     this.isPlaying = false;
+    this.playPromise = null;
     if (this.audioEl) {
       this.audioEl.pause();
     }

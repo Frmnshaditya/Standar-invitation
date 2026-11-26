@@ -32,10 +32,10 @@ export default function HeroSection() {
             >
               <div className="relative h-full w-full overflow-hidden">
                 <img
-                  key={isActive ? `hero-left-active-${slideIndex}` : `hero-left-idle-${idx}`}
                   src={pair.left}
                   alt={pair.leftAlt}
                   referrerPolicy="no-referrer"
+                  decoding="async"
                   className={`h-full w-full object-cover object-top ${
                     isActive ? 'elementor-ken-burns-in' : ''
                   }`}
@@ -43,10 +43,10 @@ export default function HeroSection() {
               </div>
               <div className="relative h-full w-full overflow-hidden">
                 <img
-                  key={isActive ? `hero-right-active-${slideIndex}` : `hero-right-idle-${idx}`}
                   src={pair.right}
                   alt={pair.rightAlt}
                   referrerPolicy="no-referrer"
+                  decoding="async"
                   className={`h-full w-full object-cover object-top ${
                     isActive ? 'elementor-ken-burns-in' : ''
                   }`}

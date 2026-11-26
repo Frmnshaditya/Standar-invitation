@@ -39,10 +39,10 @@ export default function CoverGate({ guestName, onOpen }: CoverGateProps) {
             >
               <div className="relative h-full w-full overflow-hidden">
                 <img
-                  key={isActive ? `left-active-${slideIndex}` : `left-idle-${idx}`}
                   src={pair.left}
                   alt={pair.leftAlt}
                   referrerPolicy="no-referrer"
+                  decoding="async"
                   className={`h-full w-full object-cover object-top ${
                     isActive ? 'elementor-ken-burns-in' : ''
                   }`}
@@ -50,10 +50,10 @@ export default function CoverGate({ guestName, onOpen }: CoverGateProps) {
               </div>
               <div className="relative h-full w-full overflow-hidden">
                 <img
-                  key={isActive ? `right-active-${slideIndex}` : `right-idle-${idx}`}
                   src={pair.right}
                   alt={pair.rightAlt}
                   referrerPolicy="no-referrer"
+                  decoding="async"
                   className={`h-full w-full object-cover object-top ${
                     isActive ? 'elementor-ken-burns-in' : ''
                   }`}
