@@ -23,7 +23,66 @@ class WeddingAudioEngine {
   private stepIndex = 0;
   private appliedStartOffset = false;
   private playPromise: Promise<boolean> | null = null;
+  private pausedByVisibility = false;
+  private resumeGestureHandler: (() => void) | null = null;
   private listeners = new Set<(playing: boolean) => void>();
+
+  constructor() {
+    this.setupVisibilityHandlers();
+  }
+
+  private clearResumeGestureHandler() {
+    if (this.resumeGestureHandler && typeof window !== 'undefined') {
+      window.removeEventListener('pointerdown', this.resumeGestureHandler);
+      window.removeEventListener('keydown', this.resumeGestureHandler);
+      this.resumeGestureHandler = null;
+    }
+  }
+
+  private setupVisibilityHandlers() {
+    if (typeof window === 'undefined' || typeof document === 'undefined') return;
+
+    const handleLeaveTab = () => {
+      this.clearResumeGestureHandler();
+      if (this.isPlaying || this.playPromise) {
+        this.pausedByVisibility = true;
+        this.pauseInternal(true);
+      }
+    };
+
+    const handleEnterTab = () => {
+      if (document.hidden || !this.pausedByVisibility) return;
+      this.pausedByVisibility = false;
+      void this.play().then((ok) => {
+        if (!ok && !this.isPlaying && !document.hidden) {
+          // Browser blocked auto-resume without a gesture; resume on next tap/key
+          this.pausedByVisibility = true;
+          if (!this.resumeGestureHandler) {
+            this.resumeGestureHandler = () => {
+              this.clearResumeGestureHandler();
+              if (!document.hidden && this.pausedByVisibility) {
+                this.pausedByVisibility = false;
+                void this.play();
+              }
+            };
+            window.addEventListener('pointerdown', this.resumeGestureHandler, { passive: true });
+            window.addEventListener('keydown', this.resumeGestureHandler, { passive: true });
+          }
+        }
+      });
+    };
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        handleLeaveTab();
+      } else {
+        handleEnterTab();
+      }
+    });
+
+    window.addEventListener('pagehide', handleLeaveTab);
+    window.addEventListener('pageshow', handleEnterTab);
+  }
 
   // Chorus-first romantic felt-piano arrangement inspired by "I Finally Found Someone" (in C Major)
   private readonly arrangement: MelodyStep[] = [
@@ -227,6 +286,11 @@ class WeddingAudioEngine {
   }
 
   public async play(): Promise<boolean> {
+    if (typeof document !== 'undefined' && document.hidden) {
+      return false;
+    }
+    this.pausedByVisibility = false;
+    this.clearResumeGestureHandler();
     if (this.isPlaying) return true;
     if (this.playPromise) return this.playPromise;
 
@@ -236,6 +300,11 @@ class WeddingAudioEngine {
         try {
           this.applyStartOffset(audio);
           await audio.play();
+          if (typeof document !== 'undefined' && document.hidden) {
+            audio.pause();
+            this.pausedByVisibility = true;
+            return false;
+          }
           this.applyStartOffset(audio);
           this.isPlaying = true;
           this.notify();
@@ -249,6 +318,10 @@ class WeddingAudioEngine {
         }
       }
 
+      if (typeof document !== 'undefined' && document.hidden) {
+        this.pausedByVisibility = true;
+        return false;
+      }
       return this.startSynth();
     })();
 
@@ -259,7 +332,11 @@ class WeddingAudioEngine {
     }
   }
 
-  public pause(): void {
+  private pauseInternal(preserveVisibilityFlag: boolean): void {
+    if (!preserveVisibilityFlag) {
+      this.pausedByVisibility = false;
+      this.clearResumeGestureHandler();
+    }
     this.isPlaying = false;
     this.playPromise = null;
     if (this.audioEl) {
@@ -270,6 +347,10 @@ class WeddingAudioEngine {
       this.stepTimer = null;
     }
     this.notify();
+  }
+
+  public pause(): void {
+    this.pauseInternal(false);
   }
 
   public getPlaying(): boolean {

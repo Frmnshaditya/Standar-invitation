@@ -53,7 +53,7 @@ export default function App() {
     let active = true;
     let unlocked = false;
     const tryAutoPlay = async () => {
-      if (!active || unlocked || weddingAudio.getPlaying()) return;
+      if (!active || unlocked || document.hidden || weddingAudio.getPlaying()) return;
       const ok = await weddingAudio.play();
       if (ok && active) {
         unlocked = true;
@@ -65,9 +65,16 @@ export default function App() {
       void tryAutoPlay();
     };
 
+    const onVisibilityReturn = () => {
+      if (!document.hidden && !unlocked) {
+        void tryAutoPlay();
+      }
+    };
+
     const cleanupGestureListeners = () => {
       window.removeEventListener('pointerdown', onFirstGesture);
       window.removeEventListener('keydown', onFirstGesture);
+      document.removeEventListener('visibilitychange', onVisibilityReturn);
     };
 
     // Attempt immediate autoplay right when the link is opened
@@ -76,6 +83,7 @@ export default function App() {
     // If browser autoplay policy blocks sound before interaction, unlock immediately on first tap/click/key
     window.addEventListener('pointerdown', onFirstGesture, { passive: true });
     window.addEventListener('keydown', onFirstGesture, { passive: true });
+    document.addEventListener('visibilitychange', onVisibilityReturn);
 
     return () => {
       active = false;
