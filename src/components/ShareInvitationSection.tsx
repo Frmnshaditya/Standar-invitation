@@ -13,15 +13,16 @@ export default function ShareInvitationSection() {
       : 'https://digitalinvitation.biz.id';
 
   const trimmedGuest = guestNameInput.trim();
+  const baseUrl = `${origin}/metty-piter`;
 
   const generatedUrl = useMemo(() => {
-    const base = `${origin}/metty-piter`;
-    if (!trimmedGuest) return base;
+    if (!trimmedGuest) return baseUrl;
     const formattedGuest = trimmedGuest.replace(/\s+/g, '-');
-    return `${base}?to=${encodeURIComponent(formattedGuest)}`;
-  }, [origin, trimmedGuest]);
+    return `${baseUrl}?to=${encodeURIComponent(formattedGuest)}`;
+  }, [baseUrl, trimmedGuest]);
 
   const whatsappHref = useMemo(() => {
+    const shareUrl = trimmedGuest ? generatedUrl : baseUrl;
     const greeting = trimmedGuest
       ? `Kepada Yth. *${trimmedGuest}*,`
       : `Kepada Yth. Bapak/Ibu/Saudara/i,`;
@@ -36,20 +37,21 @@ export default function ShareInvitationSection() {
       `${WEDDING_INFO.eventDateLabel}`,
       ``,
       `Buka undangan digital kami melalui tautan berikut:`,
-      generatedUrl,
+      shareUrl,
       ``,
       `Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Anda berkenan hadir dan memberikan doa restu.`,
     ].join('\n');
 
     return `https://wa.me/?text=${encodeURIComponent(text)}`;
-  }, [generatedUrl, trimmedGuest]);
+  }, [baseUrl, generatedUrl, trimmedGuest]);
 
   const handleCopyLink = async () => {
+    const linkToCopy = trimmedGuest ? generatedUrl : baseUrl;
     try {
-      await navigator.clipboard.writeText(generatedUrl);
+      await navigator.clipboard.writeText(linkToCopy);
     } catch {
       const textarea = document.createElement('textarea');
-      textarea.value = generatedUrl;
+      textarea.value = linkToCopy;
       document.body.appendChild(textarea);
       textarea.select();
       document.execCommand('copy');
@@ -87,7 +89,7 @@ export default function ShareInvitationSection() {
                 htmlFor="nama-tamu-tujuan"
                 className="font-lato block text-[11px] font-semibold tracking-[0.08em] uppercase text-neutral-600 sm:text-xs"
               >
-                NAMA TAMU TUJUAN (OPSIONAL)
+                NAMA TAMU TUJUAN
               </label>
               <input
                 id="nama-tamu-tujuan"

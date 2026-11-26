@@ -65,17 +65,11 @@ export const WEDDING_IMAGES = {
   heroSlides: PAIRED_BACKDROP_SLIDES,
   eventBackdropSlides: PAIRED_BACKDROP_SLIDES,
   closingBackdropSlides: PAIRED_BACKDROP_SLIDES,
-  quotePortrait: '/assets/aistudio/9939df40-e456-41b1-8317-5dd2abe7792b_6754ce7f.jpg',
   brideGroomBackdropLeft: '/assets/aistudio/bdac5f84-a946-48a2-b392-3c195674e9f3_d717c8c7.jpg',
   brideGroomBackdropRight: '/assets/aistudio/804d939e-9cc6-44f0-9178-b3f4af7ed1f9_3fbd567d.jpg',
   bridePortrait: '/assets/aistudio/00029d70-954d-4dbc-ad42-edbda05b7d58_56eda4cb.jpg',
   groomPortrait: '/assets/aistudio/b6f3a9c5-3eb3-4d67-9fae-0e8f6931a310_4b0de444.jpg',
   gallery: [
-    {
-      src: '/assets/aistudio/9939df40-e456-41b1-8317-5dd2abe7792b_6754ce7f.jpg',
-      alt: 'Metty & Piter berpelukan hangat di aula istana bersejarah',
-      objectPosition: 'object-center',
-    },
     {
       src: '/assets/aistudio/8aefa220-6e05-41d9-86c4-4b0b0fe5b14c_94d6eeb7.jpg',
       alt: 'Metty & Piter di balkon beranda bernuansa kuning dan biru',
