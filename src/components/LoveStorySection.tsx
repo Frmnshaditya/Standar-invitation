@@ -33,7 +33,11 @@ export default function LoveStorySection() {
                         onError={() =>
                           setFailedImages((prev) => ({ ...prev, [chapter.id]: true }))
                         }
-                        className="aspect-[4/3] w-full object-cover object-center"
+                        className={
+                          chapter.id === 'awal-cerita-ugm'
+                            ? 'aspect-[4/3] w-full origin-top scale-[1.1] object-cover object-top'
+                            : 'aspect-[4/3] w-full object-cover object-center'
+                        }
                       />
                     </div>
                   </Reveal>

@@ -171,7 +171,9 @@ class WeddingAudioEngine {
     ) {
       try {
         audio.currentTime = WEDDING_MUSIC.startAtSeconds;
-        this.appliedStartOffset = true;
+        if (Math.abs(audio.currentTime - WEDDING_MUSIC.startAtSeconds) < 2) {
+          this.appliedStartOffset = true;
+        }
       } catch {
         // Ignore if media is not seekable yet; will retry on canplay/playing
       }
@@ -192,6 +194,7 @@ class WeddingAudioEngine {
       const onSeekReady = () => this.applyStartOffset(audio);
       audio.addEventListener('loadedmetadata', onSeekReady);
       audio.addEventListener('canplay', onSeekReady);
+      audio.addEventListener('playing', onSeekReady);
 
       audio.addEventListener('error', () => {
         this.useFallbackSynth = true;

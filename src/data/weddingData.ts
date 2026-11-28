@@ -33,7 +33,7 @@ export interface RsvpWish {
 export const WEDDING_MUSIC = {
   volume: 0.65,
   autoPlay: true,
-  startAtSeconds: 68,
+  startAtSeconds: 104,
 };
 
 export interface PairedSlide {
@@ -69,33 +69,6 @@ export const WEDDING_IMAGES = {
   brideGroomBackdropRight: '/assets/aistudio/804d939e-9cc6-44f0-9178-b3f4af7ed1f9_3fbd567d.jpg',
   bridePortrait: '/assets/aistudio/00029d70-954d-4dbc-ad42-edbda05b7d58_56eda4cb.jpg',
   groomPortrait: '/assets/aistudio/b6f3a9c5-3eb3-4d67-9fae-0e8f6931a310_4b0de444.jpg',
-  gallery: [
-    {
-      src: '/assets/aistudio/8aefa220-6e05-41d9-86c4-4b0b0fe5b14c_94d6eeb7.jpg',
-      alt: 'Metty & Piter di balkon beranda bernuansa kuning dan biru',
-      objectPosition: 'object-center',
-    },
-    {
-      src: '/assets/aistudio/738c1e3c-5723-4c29-ae25-d11a11870191_12a6bfff.jpg',
-      alt: 'Tatapan penuh kebahagiaan Metty & Piter di ruang istana klasik',
-      objectPosition: 'object-center',
-    },
-    {
-      src: '/assets/aistudio/2ae8f17f-99f6-446d-9f5e-5b20297725d4_3c5c4018.jpg',
-      alt: 'Potret kebersamaan Metty & Piter di ruang utama istana',
-      objectPosition: 'object-center',
-    },
-    {
-      src: '/assets/aistudio/62110946-5a5a-4ef9-8a6a-9d34a4b53f54_c7c3da28.jpg',
-      alt: 'Momen hangat Metty & Piter di balik jendela kayu klasik',
-      objectPosition: 'object-center',
-    },
-    {
-      src: '/assets/aistudio/4ac63a3e-35a7-44ee-8b41-50c808dc099c_fe47c78e.jpg',
-      alt: 'Potret kebersamaan Metty & Piter di dalam masjid megah bernuansa biru',
-      objectPosition: 'object-[50%_65%]',
-    },
-  ],
 };
 
 export const WEDDING_INFO = {
@@ -142,7 +115,7 @@ export const LOVE_STORY_CHAPTERS: LoveStoryChapter[] = [
     id: 'awal-cerita-ugm',
     title: 'Awal di Bangku Perkuliahan',
     date: 'UGM — Yogyakarta',
-    image: '/assets/aistudio/62110946-5a5a-4ef9-8a6a-9d34a4b53f54_c7c3da28.jpg',
+    image: '/assets/aistudio/images_a6c07508.jpg',
     paragraphs: [
       'Semua berawal di bangku perkuliahan, di bawah rindangnya pepohonan UGM dan hangatnya langit Yogyakarta. Bukan sekadar mengejar gelar, di sinilah langkah-langkah kecil itu bermula, merangkai mimpi dan pertemuan yang mengubah segalanya. Dari obrolan sederhana di sudut kampus biru, tumbuh sebuah cerita yang rasanya tak ingin pernah usai. Siapa sangka, sebuah perjumpaan sederhana di kota pelajar itu menjadi awal dari penantian paling setia sepanjang sejarah hidup seseorang.',
     ],
@@ -150,7 +123,6 @@ export const LOVE_STORY_CHAPTERS: LoveStoryChapter[] = [
   {
     id: 'penantian-46-tahun',
     title: 'Empat Puluh Enam Tahun Penantian',
-    image: '/assets/aistudio/2ae8f17f-99f6-446d-9f5e-5b20297725d4_3c5c4018.jpg',
     paragraphs: [
       'Empat puluh enam tahun bukanlah waktu yang singkat. Musim berganti, rambut memutih, dan garis usia mulai terukir di wajah, namun rasa itu tetap tinggal di tempat yang sama—utuh dan tak lekang oleh zaman. Di antara kenangan sudut-sudut Bulaksumur dan senja Yogyakarta yang syahdu, cinta ini membuktikan bahwa kesetiaan sejati tidak mengenal kata kedaluwarsa.',
     ],
@@ -158,7 +130,6 @@ export const LOVE_STORY_CHAPTERS: LoveStoryChapter[] = [
   {
     id: 'ujian-takdir',
     title: 'Ketulusan yang Tak Pernah Padam',
-    image: '/assets/aistudio/8aefa220-6e05-41d9-86c4-4b0b0fe5b14c_94d6eeb7.jpg',
     paragraphs: [
       'Namun, takdir terkadang punya cara unik untuk menguji ketulusan. Butuh waktu hampir setengah abad bagi dua hati ini untuk benar-benar bersatu. Empat puluh enam tahun penantian yang diisi dengan doa dalam diam, kesabaran tanpa batas, dan keyakinan yang tak pernah padam.',
     ],
@@ -167,7 +138,7 @@ export const LOVE_STORY_CHAPTERS: LoveStoryChapter[] = [
     id: 'pulang-bersama',
     title: 'Akhirnya Pulang Bersama',
     date: '16 Desember 2026',
-    image: '/assets/aistudio/738c1e3c-5723-4c29-ae25-d11a11870191_12a6bfff.jpg',
+    image: '/assets/aistudio/62110946-5a5a-4ef9-8a6a-9d34a4b53f54_c7c3da28.jpg',
     paragraphs: [
       'Dari mahasiswa muda di Yogyakarta hingga menua bersama hari ini, perjalanan ini adalah bukti nyata bahwa cinta sejati tidak pernah salah alamat, ia hanya menunggu waktu yang paling tepat untuk pulang. Sebab pada akhirnya, sejauh apa pun waktu berjalan, hati akan selalu pulang kepada orang yang sama ♥️',
     ],

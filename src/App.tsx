@@ -5,7 +5,6 @@ import ClosingSection from './components/ClosingSection';
 import CoverGate from './components/CoverGate';
 import EventSection from './components/EventSection';
 import FloatingControls from './components/FloatingControls';
-import GallerySection from './components/GallerySection';
 import HeroSection from './components/HeroSection';
 import LoveStorySection from './components/LoveStorySection';
 import QuoteSection from './components/QuoteSection';
@@ -168,7 +167,6 @@ export default function App() {
         <QuoteSection />
         <BrideGroomSection />
         <EventSection />
-        <GallerySection />
         <LoveStorySection />
         <AmplopSection />
         <RsvpSection />
